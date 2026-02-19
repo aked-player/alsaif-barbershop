@@ -229,8 +229,13 @@ a {
 }
 
 .team-grid-single {
-  grid-template-columns: minmax(260px, 420px);
+  display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.team-grid-single .team-card:not(.is-hidden) {
+  width: min(420px, 100%);
 }
 
 .team-card {
