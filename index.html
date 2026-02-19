@@ -6,155 +6,168 @@
     <title>الهيبة للعناية بالرجال</title>
     <meta
       name="description"
-      content="الهيبة للعناية بالرجال يقدم حلاقة دقيقة، تهذيب لحية احترافي، وخدمة ملكية بطابع عصري راقٍ."
+      content="موقع الهيبة للعناية بالرجال - صالون رجالي فاخر بخدمات حلاقة وعناية متكاملة بطابع عصري راقٍ."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&family=Changa:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&family=Tajawal:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="grain" aria-hidden="true"></div>
-    <header class="site-header">
-      <a href="#top" class="brand">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span class="brand-text"
-          >الهيبة
-          <small>للعناية بالرجال</small>
-        </span>
-      </a>
-      <button class="menu-toggle" type="button" aria-label="فتح القائمة">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="site-nav" aria-label="التنقل الرئيسي">
-        <a href="#services">الخدمات</a>
-        <a href="#about">من نحن</a>
-        <a href="#hours">المواعيد</a>
-        <a href="#book" class="nav-cta">احجز الآن</a>
+    <header id="home" class="site-header">
+      <div class="logo-wrap">
+        <img src="assets/logo.png" alt="شعار الهيبة للعناية بالرجال" class="site-logo" />
+      </div>
+
+      <nav class="navbar" aria-label="القائمة الرئيسية">
+        <ul class="nav-list">
+          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#services">خدماتنا</a></li>
+          <li><a href="#team">فريق العمل</a></li>
+          <li><a href="#products">المنتجات</a></li>
+          <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero section reveal">
-        <div class="hero-copy">
-          <p class="eyebrow">أناقة الرجال تبدأ من هنا</p>
+    <main>
+      <section class="hero section">
+        <div class="container hero-content">
+          <p class="hero-kicker">أناقة الرجل تبدأ من هنا</p>
           <h1>الهيبة للعناية بالرجال</h1>
-          <p class="hero-lead">
-            قصات عصرية، تحديد لحية باحتراف، ولمسة نهائية دقيقة تمنحك حضورًا
-            قويًا وثقة تدوم طوال الأسبوع.
+          <p class="hero-subtitle">
+            تجربة فاخرة تجمع بين الدقة، النظافة، واللمسة الملكية في العناية بالرجل.
           </p>
-          <div class="hero-actions">
-            <a href="#book" class="btn btn-primary">احجز مقعدك</a>
-            <a href="#services" class="btn btn-outline">تصفح الخدمات</a>
-          </div>
+          <a href="#contact" class="btn-primary">احجز الآن</a>
         </div>
-        <div class="hero-logo-wrap">
-          <img
-            id="shop-logo"
-            src="assets/logo.png"
-            alt="شعار الهيبة للعناية بالرجال"
-            loading="eager"
-          />
-          <div class="logo-fallback">
-            <p>ضع ملف الشعار هنا:</p>
-            <code>assets/logo.png</code>
+      </section>
+
+      <section id="services" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span>خدماتنا</span>
+            <h2>خدمات احترافية بمستوى فاخر</h2>
+          </div>
+
+          <div class="grid services-grid">
+            <article class="card service-card">
+              <div class="icon">✂</div>
+              <h3>قص شعر احترافي</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">🧔</div>
+              <h3>تحديد لحية</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">✨</div>
+              <h3>تنظيف بشرة</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">🎨</div>
+              <h3>صبغات شعر</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">🦶</div>
+              <h3>بادي كير</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">✋</div>
+              <h3>مانيكير</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">💇</div>
+              <h3>كوافير</h3>
+            </article>
+            <article class="card service-card">
+              <div class="icon">💨</div>
+              <h3>نركيلة VIP</h3>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="services" class="section reveal">
-        <div class="section-heading">
-          <p class="eyebrow">الخدمات</p>
-          <h2>خدمات مصممة لكل إطلالة</h2>
-        </div>
-        <div class="service-grid">
-          <article class="card">
-            <h3>قصة كلاسيكية</h3>
-            <p>تشذيب دقيق بالمقص والماكينة مع إنهاء نظيف لخط الرقبة.</p>
-            <strong>$30</strong>
-          </article>
-          <article class="card">
-            <h3>فيدر + نحت لحية</h3>
-            <p>
-              فيدر احترافي مع تحديد شكل اللحية وخطوطها بدقة عالية.
-            </p>
-            <strong>$45</strong>
-          </article>
-          <article class="card">
-            <h3>الخدمة الملكية</h3>
-            <p>
-              قصة شعر مع تهذيب لحية ومنشفة ساخنة ولمسة نهائية بمنتجات مميزة.
-            </p>
-            <strong>$60</strong>
-          </article>
-        </div>
-      </section>
+      <section id="team" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span>فريق العمل</span>
+            <h2>خبرة وثقة في كل لمسة</h2>
+          </div>
 
-      <section id="about" class="section reveal">
-        <div class="about-copy">
-          <p class="eyebrow">عن المحل</p>
-          <h2>خبرة عالية ولمسة عصرية تليق بك</h2>
-          <p>
-            في الهيبة ندمج بين أصول الحلاقة التقليدية والأسلوب العصري لنقدم
-            تجربة مريحة ونتيجة دقيقة تعكس شخصيتك بأفضل صورة.
-          </p>
-        </div>
-        <div class="about-stats">
-          <div>
-            <span>8+</span>
-            <p>سنوات خبرة</p>
-          </div>
-          <div>
-            <span>12k</span>
-            <p>قصة شعر منجزة</p>
-          </div>
-          <div>
-            <span>4.9</span>
-            <p>متوسط تقييم العملاء</p>
+          <div class="grid team-grid">
+            <article class="card team-card">
+              <h3>الحلاق أحمد</h3>
+              <a href="tel:0770000000" class="phone-link">رقم: 0770000000</a>
+            </article>
+            <article class="card team-card">
+              <h3>الحلاق علي</h3>
+              <a href="tel:0770000000" class="phone-link">رقم: 0770000000</a>
+            </article>
+            <article class="card team-card">
+              <h3>الحلاق مصطفى</h3>
+              <a href="tel:0770000000" class="phone-link">رقم: 0770000000</a>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="hours" class="section reveal hours-layout">
-        <div>
-          <p class="eyebrow">ساعات العمل</p>
-          <h2>يمكنك الحضور مباشرة أو الحجز مسبقًا</h2>
-          <ul class="hours-list">
-            <li>
-              <span>الاثنين - الخميس</span>
-              <strong>١٠:٠٠ ص - ٨:٠٠ م</strong>
-            </li>
-            <li>
-              <span>الجمعة</span>
-              <strong>١٠:٠٠ ص - ٩:٠٠ م</strong>
-            </li>
-            <li>
-              <span>السبت</span>
-              <strong>٩:٠٠ ص - ٩:٠٠ م</strong>
-            </li>
-            <li>
-              <span>الأحد</span>
-              <strong>١١:٠٠ ص - ٦:٠٠ م</strong>
-            </li>
-          </ul>
+      <section id="products" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span>المنتجات المتوفرة</span>
+            <h2>منتجات أصلية للعناية اليومية</h2>
+          </div>
+
+          <div class="grid products-grid">
+            <article class="card product-card"><h3>شمع شعر</h3></article>
+            <article class="card product-card"><h3>زيت لحية</h3></article>
+            <article class="card product-card"><h3>عطور رجالية</h3></article>
+            <article class="card product-card"><h3>ماكينات حلاقة</h3></article>
+            <article class="card product-card"><h3>أدوات عناية</h3></article>
+          </div>
         </div>
-        <div id="book" class="booking-card">
-          <h3>احجز جلستك الآن</h3>
-          <p>اتصل بنا مباشرة أو راسلنا عبر واتساب لتأكيد موعدك.</p>
-          <a href="tel:+10000000000" class="btn btn-primary">اتصال هاتفي</a>
-          <a href="https://wa.me/10000000000" class="btn btn-outline">واتساب</a>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span>تواصل معنا</span>
+            <h2>نحن جاهزون لخدمتك يوميًا</h2>
+          </div>
+
+          <div class="contact-layout">
+            <div class="card contact-card">
+              <ul class="contact-list">
+                <li><strong>رقم الهاتف:</strong> <a href="tel:0770000000">0770000000</a></li>
+                <li><strong>العنوان:</strong> بغداد - شارع الرئيسي</li>
+                <li><strong>أوقات الدوام:</strong> يوميًا 10:00 ص - 11:00 م</li>
+              </ul>
+
+              <div class="social-links" aria-label="وسائل التواصل الاجتماعي">
+                <a href="#" aria-label="فيسبوك">f</a>
+                <a href="#" aria-label="انستغرام">◎</a>
+                <a href="#" aria-label="تيك توك">♪</a>
+                <a href="#" aria-label="واتساب">✆</a>
+              </div>
+            </div>
+
+            <div class="map-wrap">
+              <iframe
+                title="موقع المحل على الخريطة"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Baghdad&output=embed"
+              ></iframe>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>الهيبة للعناية بالرجال</p>
-      <p>العنوان: شارع رئيسي 123، مدينتك</p>
+      <p>© 2026 الهيبة للعناية بالرجال - جميع الحقوق محفوظة</p>
     </footer>
-
-    <script src="script.js"></script>
   </body>
 </html>
