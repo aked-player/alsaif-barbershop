@@ -228,8 +228,17 @@ a {
   grid-template-columns: 1fr;
 }
 
+.team-grid-single {
+  grid-template-columns: minmax(260px, 420px);
+  justify-content: center;
+}
+
 .team-card {
   text-align: center;
+}
+
+.team-card.is-hidden {
+  display: none;
 }
 
 .phone-link {
