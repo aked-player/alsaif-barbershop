@@ -27,8 +27,9 @@ body {
 
 body {
   min-height: 100vh;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: "Cairo", "Tahoma", sans-serif;
   color: var(--paper);
+  text-align: right;
   background:
     radial-gradient(900px 480px at 10% -10%, #ffdf70 0%, transparent 55%),
     radial-gradient(950px 620px at 100% 0%, #bb7e00 0%, transparent 58%),
@@ -82,15 +83,16 @@ body {
 
 .brand-text {
   display: grid;
-  line-height: 0.95;
-  font-family: "Teko", Impact, sans-serif;
-  font-size: 1.7rem;
-  letter-spacing: 0.05em;
+  line-height: 1.05;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: 1.9rem;
+  letter-spacing: 0;
+  text-align: right;
 }
 
 .brand-text small {
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
+  font-size: 0.9rem;
+  letter-spacing: 0;
   color: #f6da8a;
 }
 
@@ -103,9 +105,9 @@ body {
 .site-nav a {
   color: #f6ecd2;
   text-decoration: none;
-  font-family: "Teko", Impact, sans-serif;
-  font-size: 1.15rem;
-  letter-spacing: 0.08em;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0;
   transition: color 0.2s ease;
 }
 
@@ -149,7 +151,7 @@ main {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1fr 1fr;
   gap: clamp(1.4rem, 4vw, 3.2rem);
   align-items: center;
   min-height: calc(100vh - 6rem);
@@ -157,11 +159,10 @@ main {
 
 .eyebrow {
   margin: 0 0 0.8rem;
-  font-family: "Teko", Impact, sans-serif;
-  letter-spacing: 0.14em;
+  font-family: "Changa", "Cairo", sans-serif;
+  letter-spacing: 0;
   color: #f9df91;
-  font-size: 1.03rem;
-  text-transform: uppercase;
+  font-size: 1.15rem;
 }
 
 h1,
@@ -171,19 +172,19 @@ h3 {
 }
 
 h1 {
-  font-family: "Teko", Impact, sans-serif;
-  font-size: clamp(2.8rem, 8vw, 5.9rem);
-  line-height: 0.9;
-  letter-spacing: 0.03em;
-  max-width: 9ch;
-  text-transform: uppercase;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: clamp(2.4rem, 7vw, 4.8rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  max-width: 12ch;
 }
 
 .hero-lead {
   margin-top: 1rem;
   max-width: 45ch;
   color: #f6e8bf;
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.9;
 }
 
 .hero-actions {
@@ -201,9 +202,9 @@ h1 {
   padding: 0.66rem 1.05rem;
   border-radius: 999px;
   text-decoration: none;
-  font-family: "Teko", Impact, sans-serif;
-  font-size: 1.12rem;
-  letter-spacing: 0.08em;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: 1.08rem;
+  letter-spacing: 0;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -251,7 +252,7 @@ h1 {
 }
 
 #shop-logo {
-  width: min(360px, 78%);
+  width: min(440px, 86%);
   height: auto;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
   animation: floatLogo 7s ease-in-out infinite;
@@ -290,11 +291,10 @@ h1 {
 .section-heading h2,
 #about h2,
 #hours h2 {
-  font-family: "Teko", Impact, sans-serif;
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  line-height: 0.95;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: 0;
 }
 
 .service-grid {
@@ -319,10 +319,9 @@ h1 {
 }
 
 .card h3 {
-  font-family: "Teko", Impact, sans-serif;
-  font-size: 1.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: "Changa", "Cairo", sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0;
 }
 
 .card p {
@@ -332,10 +331,10 @@ h1 {
 }
 
 .card strong {
-  font-family: "Teko", Impact, sans-serif;
+  font-family: "Changa", "Cairo", sans-serif;
   color: var(--gold-100);
   font-size: 1.45rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
 }
 
 #about {
@@ -348,6 +347,7 @@ h1 {
 .about-copy p {
   max-width: 62ch;
   color: #ece0bf;
+  line-height: 1.95;
 }
 
 .about-stats {
@@ -366,7 +366,7 @@ h1 {
 
 .about-stats span {
   display: block;
-  font-family: "Teko", Impact, sans-serif;
+  font-family: "Changa", "Cairo", sans-serif;
   font-size: 2.2rem;
   line-height: 1;
   color: #ffe89d;
@@ -409,9 +409,9 @@ h1 {
 }
 
 .hours-list strong {
-  font-family: "Teko", Impact, sans-serif;
+  font-family: "Changa", "Cairo", sans-serif;
   font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
 }
 
 .booking-card {
@@ -430,14 +430,14 @@ h1 {
 }
 
 .booking-card h3 {
-  font-family: "Teko", Impact, sans-serif;
+  font-family: "Changa", "Cairo", sans-serif;
   font-size: 2rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 .booking-card p {
   color: #ede1c0;
+  line-height: 1.85;
 }
 
 .booking-card .btn {
@@ -460,8 +460,8 @@ h1 {
 }
 
 .site-footer p:first-child {
-  font-family: "Teko", Impact, sans-serif;
-  letter-spacing: 0.09em;
+  font-family: "Changa", "Cairo", sans-serif;
+  letter-spacing: 0;
   font-size: 1.15rem;
 }
 
@@ -506,7 +506,7 @@ h1 {
   .site-nav {
     position: fixed;
     top: 4.5rem;
-    right: 1rem;
+    left: 1rem;
     display: none;
     flex-direction: column;
     align-items: stretch;
@@ -541,7 +541,7 @@ h1 {
   }
 
   .brand-text {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
   }
 
   .about-stats {
