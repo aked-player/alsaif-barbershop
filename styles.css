@@ -1,0 +1,556 @@
+:root {
+  --gold-100: #ffec9b;
+  --gold-300: #ffd23f;
+  --gold-500: #d29a08;
+  --gold-700: #8e6200;
+  --ink-900: #070707;
+  --ink-700: #101010;
+  --ink-500: #1d1d1d;
+  --paper: #f7f0d4;
+  --line: rgba(255, 217, 92, 0.25);
+  --radius-lg: 1.2rem;
+  --radius-md: 0.9rem;
+  --shadow: 0 28px 60px rgba(0, 0, 0, 0.48);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Fraunces", Georgia, serif;
+  color: var(--paper);
+  background:
+    radial-gradient(900px 480px at 10% -10%, #ffdf70 0%, transparent 55%),
+    radial-gradient(950px 620px at 100% 0%, #bb7e00 0%, transparent 58%),
+    linear-gradient(140deg, #1a1200 0%, #0c0a05 62%, #0a0a0a 100%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: radial-gradient(#fff 0.5px, transparent 0.5px);
+  background-size: 5px 5px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.1rem;
+  padding: 1rem clamp(1rem, 3vw, 3rem);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 220, 112, 0.15);
+  background: linear-gradient(
+    to right,
+    rgba(10, 10, 10, 0.88),
+    rgba(36, 24, 0, 0.74)
+  );
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 28% 28%, var(--gold-100), var(--gold-500));
+  box-shadow:
+    0 0 0 2px rgba(255, 213, 82, 0.3),
+    0 0 24px rgba(255, 193, 37, 0.45);
+}
+
+.brand-text {
+  display: grid;
+  line-height: 0.95;
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+}
+
+.brand-text small {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #f6da8a;
+}
+
+.site-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.site-nav a {
+  color: #f6ecd2;
+  text-decoration: none;
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover {
+  color: var(--gold-300);
+}
+
+.nav-cta {
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.menu-toggle {
+  display: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.menu-toggle span {
+  display: block;
+  width: 1.2rem;
+  height: 2px;
+  margin: 4px auto;
+  border-radius: 2px;
+  background: var(--paper);
+}
+
+main {
+  width: min(1180px, 92vw);
+  margin: 0 auto;
+  padding-bottom: 5rem;
+}
+
+.section {
+  padding: clamp(2rem, 5vw, 5rem) 0;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(1.4rem, 4vw, 3.2rem);
+  align-items: center;
+  min-height: calc(100vh - 6rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.8rem;
+  font-family: "Teko", Impact, sans-serif;
+  letter-spacing: 0.14em;
+  color: #f9df91;
+  font-size: 1.03rem;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+h1 {
+  font-family: "Teko", Impact, sans-serif;
+  font-size: clamp(2.8rem, 8vw, 5.9rem);
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  max-width: 9ch;
+  text-transform: uppercase;
+}
+
+.hero-lead {
+  margin-top: 1rem;
+  max-width: 45ch;
+  color: #f6e8bf;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+.hero-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10.3rem;
+  padding: 0.66rem 1.05rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 1.12rem;
+  letter-spacing: 0.08em;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  color: #231700;
+  background: linear-gradient(130deg, var(--gold-300), #f1b800);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.34);
+}
+
+.btn-outline {
+  color: var(--paper);
+  border: 1px solid var(--line);
+  background: rgba(255, 214, 95, 0.08);
+}
+
+.hero-logo-wrap {
+  position: relative;
+  min-height: clamp(20rem, 62vw, 33rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 214, 95, 0.28);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 230, 130, 0.28), transparent 56%),
+    linear-gradient(160deg, rgba(15, 15, 15, 0.96), rgba(35, 24, 0, 0.9));
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.hero-logo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -55% auto;
+  width: 17rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(250, 206, 64, 0.45) 0%, transparent 72%);
+}
+
+#shop-logo {
+  width: min(360px, 78%);
+  height: auto;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+  animation: floatLogo 7s ease-in-out infinite;
+}
+
+.logo-fallback {
+  display: none;
+  text-align: center;
+  color: #f8e7bb;
+  border: 1px dashed rgba(255, 215, 89, 0.45);
+  border-radius: 0.8rem;
+  padding: 1.3rem 1.2rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.logo-fallback p {
+  margin: 0 0 0.4rem;
+}
+
+.logo-fallback code {
+  display: inline-block;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  background: rgba(255, 206, 57, 0.17);
+  color: #ffe7a1;
+}
+
+.logo-missing #shop-logo {
+  display: none;
+}
+
+.logo-missing .logo-fallback {
+  display: block;
+}
+
+.section-heading h2,
+#about h2,
+#hours h2 {
+  font-family: "Teko", Impact, sans-serif;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.service-grid {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 214, 90, 0.22);
+  background:
+    linear-gradient(
+      164deg,
+      rgba(255, 214, 95, 0.12),
+      rgba(255, 214, 95, 0.03) 46%,
+      rgba(0, 0, 0, 0.25)
+    ),
+    #121212;
+}
+
+.card h3 {
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.card p {
+  margin-top: 0.6rem;
+  margin-bottom: 1rem;
+  color: #e8dbb5;
+}
+
+.card strong {
+  font-family: "Teko", Impact, sans-serif;
+  color: var(--gold-100);
+  font-size: 1.45rem;
+  letter-spacing: 0.05em;
+}
+
+#about {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: end;
+}
+
+.about-copy p {
+  max-width: 62ch;
+  color: #ece0bf;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(115px, 1fr));
+  gap: 0.8rem;
+}
+
+.about-stats div {
+  padding: 0.95rem 0.85rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 210, 92, 0.25);
+  background: rgba(0, 0, 0, 0.34);
+  text-align: center;
+}
+
+.about-stats span {
+  display: block;
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: #ffe89d;
+}
+
+.about-stats p {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+}
+
+.hours-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1rem;
+}
+
+.hours-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  border: 1px solid rgba(255, 214, 95, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.hours-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 220, 112, 0.13);
+}
+
+.hours-list li:last-child {
+  border-bottom: 0;
+}
+
+.hours-list span {
+  color: #f3dfab;
+}
+
+.hours-list strong {
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.booking-card {
+  padding: 1.2rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 214, 95, 0.28);
+  background:
+    linear-gradient(
+      to bottom right,
+      rgba(255, 209, 84, 0.18),
+      rgba(255, 209, 84, 0.04) 36%,
+      rgba(0, 0, 0, 0.24)
+    ),
+    #111;
+  box-shadow: var(--shadow);
+}
+
+.booking-card h3 {
+  font-family: "Teko", Impact, sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.booking-card p {
+  color: #ede1c0;
+}
+
+.booking-card .btn {
+  width: 100%;
+}
+
+.booking-card .btn + .btn {
+  margin-top: 0.7rem;
+}
+
+.site-footer {
+  border-top: 1px solid rgba(255, 214, 95, 0.15);
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  color: #f6deb0;
+}
+
+.site-footer p {
+  margin: 0.18rem 0;
+}
+
+.site-footer p:first-child {
+  font-family: "Teko", Impact, sans-serif;
+  letter-spacing: 0.09em;
+  font-size: 1.15rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero,
+  #about,
+  .hours-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 4.5rem;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 11rem;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 214, 95, 0.3);
+    border-radius: 0.8rem;
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .site-nav.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    padding-inline: 0.8rem;
+  }
+
+  main {
+    width: min(1180px, 94vw);
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 2rem;
+  }
+
+  .brand-text {
+    font-size: 1.45rem;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .hours-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+}

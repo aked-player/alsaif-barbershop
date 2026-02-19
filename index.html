@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alsaif Barbershop</title>
+    <meta
+      name="description"
+      content="Alsaif Barbershop offers precision cuts, beard sculpting, and premium grooming with a bold modern style."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Teko:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text"
+          >ALSAIF
+          <small>BARBERSHOP</small>
+        </span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#hours">Hours</a>
+        <a href="#book" class="nav-cta">Book Now</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section reveal">
+        <div class="hero-copy">
+          <p class="eyebrow">Tradition. Edge. Precision.</p>
+          <h1>The Crown Standard in Modern Grooming</h1>
+          <p class="hero-lead">
+            Sharp fades, sculpted beards, and confident finishes. Built for
+            clients who expect every detail to look intentional.
+          </p>
+          <div class="hero-actions">
+            <a href="#book" class="btn btn-primary">Reserve Your Chair</a>
+            <a href="#services" class="btn btn-outline">View Services</a>
+          </div>
+        </div>
+        <div class="hero-logo-wrap">
+          <img
+            id="shop-logo"
+            src="assets/logo.png"
+            alt="Alsaif Barbershop logo"
+            loading="eager"
+          />
+          <div class="logo-fallback">
+            <p>Drop your logo image at:</p>
+            <code>assets/logo.png</code>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Services</p>
+          <h2>Crafted for Every Look</h2>
+        </div>
+        <div class="service-grid">
+          <article class="card">
+            <h3>Classic Cut</h3>
+            <p>Precision scissor and clipper work with a clean neck finish.</p>
+            <strong>$30</strong>
+          </article>
+          <article class="card">
+            <h3>Fade + Beard Sculpt</h3>
+            <p>
+              Skin or taper fade paired with detailed beard linework and shape.
+            </p>
+            <strong>$45</strong>
+          </article>
+          <article class="card">
+            <h3>Royal Treatment</h3>
+            <p>
+              Haircut, beard styling, hot towel, and premium product finish.
+            </p>
+            <strong>$60</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="section reveal">
+        <div class="about-copy">
+          <p class="eyebrow">Our Shop</p>
+          <h2>Built on skill, powered by style.</h2>
+          <p>
+            Alsaif Barbershop blends old-school discipline with modern
+            aesthetics. Every appointment is paced for detail, comfort, and a
+            finish that holds up all week.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div>
+            <span>8+</span>
+            <p>Years in business</p>
+          </div>
+          <div>
+            <span>12k</span>
+            <p>Haircuts delivered</p>
+          </div>
+          <div>
+            <span>4.9</span>
+            <p>Average review score</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="hours" class="section reveal hours-layout">
+        <div>
+          <p class="eyebrow">Hours</p>
+          <h2>Walk in or book ahead</h2>
+          <ul class="hours-list">
+            <li><span>Mon - Thu</span><strong>10:00 AM - 8:00 PM</strong></li>
+            <li><span>Friday</span><strong>10:00 AM - 9:00 PM</strong></li>
+            <li><span>Saturday</span><strong>9:00 AM - 9:00 PM</strong></li>
+            <li><span>Sunday</span><strong>11:00 AM - 6:00 PM</strong></li>
+          </ul>
+        </div>
+        <div id="book" class="booking-card">
+          <h3>Book Your Session</h3>
+          <p>Call now or message us on WhatsApp to lock your time slot.</p>
+          <a href="tel:+10000000000" class="btn btn-primary">Call Shop</a>
+          <a href="https://wa.me/10000000000" class="btn btn-outline"
+            >WhatsApp</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>ALSAIF BARBERSHOP</p>
+      <p>123 Main Street, Your City</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
