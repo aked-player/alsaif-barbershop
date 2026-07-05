@@ -99,6 +99,7 @@ done
 SCRIPT_EOF
 
 chmod +x "$SCRIPT_PATH"
+chmod 755 "$SCRIPT_PATH"
 
 echo "Writing $SERVICE_PATH ..."
 cat > "$SERVICE_PATH" <<'SERVICE_EOF'
@@ -108,7 +109,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/hive-config/50xx_offset_299_to_499_when_srb.sh
+ExecStart=/bin/bash /hive-config/50xx_offset_299_to_499_when_srb.sh
 Restart=always
 RestartSec=10
 
