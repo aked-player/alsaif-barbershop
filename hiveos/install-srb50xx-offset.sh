@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH:-}"
+
 SCRIPT_PATH="/hive-config/50xx_offset_299_to_499_when_srb.sh"
 SERVICE_PATH="/etc/systemd/system/srb50xx-offset.service"
+
+if ! command -v systemctl >/dev/null 2>&1; then
+  echo "ERROR: systemctl was not found in PATH: $PATH" >&2
+  echo "Run this in the main HiveOS root shell, not inside a miner/container shell." >&2
+  echo "Debug commands: whoami; pwd; echo \$PATH; command -v systemctl; ls -l /bin/systemctl /usr/bin/systemctl" >&2
+  exit 127
+fi
 
 echo "Cleaning old srb50xx-offset service files..."
 systemctl disable --now srb50xx-offset.service 2>/dev/null || true
