@@ -55,16 +55,30 @@ install_tailscale() {
     return
   fi
 
-  require_command curl
   echo "Downloading the official Tailscale installer..."
   local installer
   installer="$(mktemp /tmp/tailscale-install.XXXXXX)"
   trap 'rm -f "${installer}"' RETURN
-  curl --fail --show-error --silent --location \
-    --proto '=https' --tlsv1.2 \
-    https://tailscale.com/install.sh \
-    --output "${installer}"
-  /bin/sh "${installer}"
+
+  # Some HiveOS images include a curl build without HTTP/HTTPS support. The
+  # official installer prefers curl whenever it exists, so a working wget must
+  # be selected explicitly in that case.
+  if command -v curl >/dev/null 2>&1 && curl --version 2>/dev/null | grep -Eq '^Protocols:.*(^| )https( |$)'; then
+    curl --fail --show-error --silent --location \
+      --proto '=https' --tlsv1.2 \
+      https://tailscale.com/install.sh \
+      --output "${installer}"
+    /bin/sh "${installer}"
+  elif command -v wget >/dev/null 2>&1; then
+    echo "curl cannot use HTTPS; using wget instead."
+    wget -q -O "${installer}" https://tailscale.com/install.sh
+    grep -Fq 'if type curl >/dev/null; then' "${installer}" \
+      || die "The Tailscale installer changed; install a curl build with HTTPS support and run this script again."
+    sed 's/if type curl >\/dev\/null; then/if false; then/' "${installer}" | /bin/sh
+  else
+    die "No usable HTTPS downloader found. Install wget, or install a curl build with HTTPS support, then run this script again."
+  fi
+
   rm -f "${installer}"
   trap - RETURN
 
