@@ -25,7 +25,7 @@ cat > "$SCRIPT_PATH" <<'SCRIPT_EOF'
 START_OFFSET=299
 RUNNING_OFFSET=499
 START_DELAY=180
-CHECK_INTERVAL=10
+CHECK_INTERVAL=1
 MINER_REGEX="SRBMiner|SRBMiner-MULTI|srbminer"
 
 export DISPLAY=:0
@@ -67,34 +67,65 @@ apply_offset_to_50xx() {
   done
 }
 
-srb_is_running() {
-  pgrep -f "$MINER_REGEX" >/dev/null 2>&1
+get_srb_pid() {
+  pgrep -fo "$MINER_REGEX" 2>/dev/null || true
 }
 
 log "Service started. Waiting for SRBMiner."
 
 while true; do
-  if srb_is_running; then
-    log "SRBMiner detected. Setting RTX 50xx to +${START_OFFSET}."
-    apply_offset_to_50xx "$START_OFFSET"
+  miner_pid="$(get_srb_pid)"
 
-    log "Waiting ${START_DELAY}s before switching to +${RUNNING_OFFSET}."
-    sleep "$START_DELAY"
-
-    if srb_is_running; then
-      log "Switching RTX 50xx to +${RUNNING_OFFSET}."
-      apply_offset_to_50xx "$RUNNING_OFFSET"
-
-      while srb_is_running; do
-        sleep "$CHECK_INTERVAL"
-      done
-
-      log "SRBMiner stopped. Returning RTX 50xx to +${START_OFFSET}."
-      apply_offset_to_50xx "$START_OFFSET"
-    fi
+  if [ -z "$miner_pid" ]; then
+    sleep "$CHECK_INTERVAL"
+    continue
   fi
 
-  sleep "$CHECK_INTERVAL"
+  log "SRBMiner detected as PID ${miner_pid}. Leaving HiveOS startup offset untouched."
+  log "Waiting ${START_DELAY}s before switching to +${RUNNING_OFFSET}."
+
+  elapsed=0
+  while [ "$elapsed" -lt "$START_DELAY" ]; do
+    sleep "$CHECK_INTERVAL"
+    current_pid="$(get_srb_pid)"
+
+    if [ "$current_pid" != "$miner_pid" ]; then
+      log "SRBMiner PID changed or stopped during warmup (${miner_pid} -> ${current_pid:-none})."
+      log "Returning RTX 50xx to +${START_OFFSET} and restarting the timer."
+      apply_offset_to_50xx "$START_OFFSET"
+      miner_pid=""
+      break
+    fi
+
+    elapsed=$((elapsed + CHECK_INTERVAL))
+  done
+
+  if [ -z "$miner_pid" ]; then
+    continue
+  fi
+
+  current_pid="$(get_srb_pid)"
+  if [ "$current_pid" != "$miner_pid" ]; then
+    log "SRBMiner PID changed before the delayed switch (${miner_pid} -> ${current_pid:-none})."
+    log "Returning RTX 50xx to +${START_OFFSET} and restarting the timer."
+    apply_offset_to_50xx "$START_OFFSET"
+    continue
+  fi
+
+  log "PID ${miner_pid} remained stable. Switching RTX 50xx to +${RUNNING_OFFSET}."
+  apply_offset_to_50xx "$RUNNING_OFFSET"
+
+  while true; do
+    sleep "$CHECK_INTERVAL"
+    current_pid="$(get_srb_pid)"
+
+    if [ "$current_pid" != "$miner_pid" ]; then
+      log "SRBMiner PID changed or stopped (${miner_pid} -> ${current_pid:-none})."
+      log "Returning RTX 50xx to +${START_OFFSET}."
+      apply_offset_to_50xx "$START_OFFSET"
+      break
+    fi
+  done
 done
 SCRIPT_EOF
 
