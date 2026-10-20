@@ -3,8 +3,14 @@ set -euo pipefail
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH:-}"
 
-SCRIPT_PATH="/hive-config/50xx_offset_299_to_499_when_srb.sh"
+SCRIPT_PATH="/hive-config/srb50xx-offset.sh"
+OLD_SCRIPT_PATH="/hive-config/50xx_offset_299_to_499_when_srb.sh"
 SERVICE_PATH="/etc/systemd/system/srb50xx-offset.service"
+
+if [ "$(id -u)" -ne 0 ]; then
+  echo "ERROR: this installer must be run as root." >&2
+  exit 1
+fi
 
 if ! command -v systemctl >/dev/null 2>&1; then
   echo "ERROR: systemctl was not found in PATH: $PATH" >&2
@@ -15,7 +21,7 @@ fi
 
 echo "Cleaning old srb50xx-offset service files..."
 systemctl disable --now srb50xx-offset.service 2>/dev/null || true
-rm -f "$SERVICE_PATH" /etc/systemd/system/srb50xx-offset.serviceV
+rm -f "$SERVICE_PATH" /etc/systemd/system/srb50xx-offset.serviceV "$OLD_SCRIPT_PATH"
 systemctl daemon-reload
 
 echo "Writing $SCRIPT_PATH ..."
@@ -23,8 +29,7 @@ cat > "$SCRIPT_PATH" <<'SCRIPT_EOF'
 #!/usr/bin/env bash
 
 START_OFFSET=299
-RUNNING_OFFSET=599
-START_DELAY=180
+START_DELAY=30
 CHECK_INTERVAL=1
 MINER_REGEX="SRBMiner|SRBMiner-MULTI|srbminer"
 
@@ -34,8 +39,21 @@ log() {
   echo "$(date '+%F %T') 50xx-offset: $*"
 }
 
-is_50xx_gpu() {
-  echo "$1" | grep -Eqi "RTX 50|GeForce RTX 50|5090|5080|5070|5060"
+running_offset_for() {
+  case "$1" in
+    *"5090"*)    echo 599 ;;
+    *"5080"*)    echo 599 ;;
+    *"5070 Ti"*) echo 599 ;;
+    *"5070"*)    echo 599 ;;
+    *"5060 Ti"*) echo 599 ;;
+    *"5060"*)    echo 599 ;;
+    *)            echo "" ;;
+  esac
+}
+
+list_gpus() {
+  nvidia-settings -q gpus 2>/dev/null |
+    sed -n 's/.*\[gpu:\([0-9][0-9]*\)\] (\(.*\))[[:space:]]*$/\1,\2/p'
 }
 
 set_core_offset() {
@@ -44,27 +62,59 @@ set_core_offset() {
 
   nvidia-settings -a "[gpu:${gpu_index}]/GPUGraphicsClockOffsetAllPerformanceLevels=${offset_value}" >/dev/null 2>&1 && return 0
 
+  local applied=1
+  local pstate
+
   for pstate in 0 1 2 3 4 5; do
-    nvidia-settings -a "[gpu:${gpu_index}]/GPUGraphicsClockOffset[${pstate}]=${offset_value}" >/dev/null 2>&1 || true
-  done
-}
-
-apply_offset_to_50xx() {
-  local offset_value="$1"
-
-  log "Applying Core Clock Offset +${offset_value} to RTX 50xx only"
-
-  nvidia-smi --query-gpu=index,name --format=csv,noheader | while IFS=',' read -r idx name; do
-    idx="$(echo "$idx" | tr -d ' ')"
-    name="$(echo "$name" | sed 's/^ *//')"
-
-    if is_50xx_gpu "$name"; then
-      log "GPU ${idx} ${name} -> +${offset_value}"
-      set_core_offset "$idx" "$offset_value"
-    else
-      log "GPU ${idx} ${name} skipped"
+    if nvidia-settings -a "[gpu:${gpu_index}]/GPUGraphicsClockOffset[${pstate}]=${offset_value}" >/dev/null 2>&1; then
+      applied=0
     fi
   done
+
+  return "$applied"
+}
+
+apply_offsets() {
+  local mode="$1"
+  local gpu_list
+  local idx
+  local name
+  local offset_value
+
+  gpu_list="$(list_gpus)"
+  if [ -z "$gpu_list" ]; then
+    log "WARNING: nvidia-settings listed no GPUs."
+    return 1
+  fi
+
+  while IFS=',' read -r idx name; do
+    offset_value="$(running_offset_for "$name")"
+
+    if [ -z "$offset_value" ]; then
+      log "GPU ${idx} ${name} skipped"
+      continue
+    fi
+
+    if [ "$mode" = "startup" ]; then
+      offset_value="$START_OFFSET"
+    fi
+
+    if set_core_offset "$idx" "$offset_value"; then
+      log "GPU ${idx} ${name} -> +${offset_value} success"
+    else
+      log "GPU ${idx} ${name} -> +${offset_value} failure"
+    fi
+  done <<< "$gpu_list"
+}
+
+apply_start_offsets() {
+  log "Applying startup Core Clock Offset +${START_OFFSET} to listed GPUs only"
+  apply_offsets startup
+}
+
+apply_running_offsets() {
+  log "Applying per-model running Core Clock Offsets to listed GPUs only"
+  apply_offsets running
 }
 
 get_srb_pid() {
@@ -81,8 +131,8 @@ while true; do
     continue
   fi
 
-  log "SRBMiner detected as PID ${miner_pid}. Leaving HiveOS startup offset untouched."
-  log "Waiting ${START_DELAY}s before switching to +${RUNNING_OFFSET}."
+  log "SRBMiner detected as PID ${miner_pid}. Leaving the current offset untouched."
+  log "Waiting ${START_DELAY}s before applying per-model running offsets."
 
   elapsed=0
   while [ "$elapsed" -lt "$START_DELAY" ]; do
@@ -91,8 +141,8 @@ while true; do
 
     if [ "$current_pid" != "$miner_pid" ]; then
       log "SRBMiner PID changed or stopped during warmup (${miner_pid} -> ${current_pid:-none})."
-      log "Returning RTX 50xx to +${START_OFFSET} and restarting the timer."
-      apply_offset_to_50xx "$START_OFFSET"
+      log "Applying +${START_OFFSET} to listed GPUs and restarting the timer."
+      apply_start_offsets
       miner_pid=""
       break
     fi
@@ -107,13 +157,13 @@ while true; do
   current_pid="$(get_srb_pid)"
   if [ "$current_pid" != "$miner_pid" ]; then
     log "SRBMiner PID changed before the delayed switch (${miner_pid} -> ${current_pid:-none})."
-    log "Returning RTX 50xx to +${START_OFFSET} and restarting the timer."
-    apply_offset_to_50xx "$START_OFFSET"
+    log "Applying +${START_OFFSET} to listed GPUs and restarting the timer."
+    apply_start_offsets
     continue
   fi
 
-  log "PID ${miner_pid} remained stable. Switching RTX 50xx to +${RUNNING_OFFSET}."
-  apply_offset_to_50xx "$RUNNING_OFFSET"
+  log "PID ${miner_pid} remained stable. Applying per-model running offsets."
+  apply_running_offsets
 
   while true; do
     sleep "$CHECK_INTERVAL"
@@ -121,8 +171,8 @@ while true; do
 
     if [ "$current_pid" != "$miner_pid" ]; then
       log "SRBMiner PID changed or stopped (${miner_pid} -> ${current_pid:-none})."
-      log "Returning RTX 50xx to +${START_OFFSET}."
-      apply_offset_to_50xx "$START_OFFSET"
+      log "Applying +${START_OFFSET} to listed GPUs."
+      apply_start_offsets
       break
     fi
   done
@@ -140,7 +190,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/bin/bash /hive-config/50xx_offset_299_to_499_when_srb.sh
+ExecStart=/bin/bash /hive-config/srb50xx-offset.sh
 Restart=always
 RestartSec=10
 
